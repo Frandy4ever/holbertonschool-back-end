@@ -6,6 +6,19 @@ import csv
 
 
 def get_employee_todo_progress(employee_id):
+    """
+    Retrieves and displays the TODO list progress of a given employee using the JSONPlaceholder API.
+    Also exports the data to a CSV file.
+
+    Parameters:
+        employee_id (int): The ID of the employee for whom the TODO list progress is to be retrieved.
+
+    Raises:
+        ValueError: If the employee ID is not a positive integer.
+
+    Returns:
+        None
+    """
     api_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
 
     response = requests.get(api_url)
@@ -32,6 +45,17 @@ def get_employee_todo_progress(employee_id):
 
 
 def export_to_csv(employee_id, employee_name, todos):
+    """
+    Exports the employee's TODO list data to a CSV file.
+
+    Parameters:
+        employee_id (int): The ID of the employee.
+        employee_name (str): The name of the employee.
+        todos (list): List of TODO items for the employee.
+
+    Returns:
+        None
+    """
     csv_filename = f"{employee_id}.csv"
 
     with open(csv_filename, mode='w', newline='') as csv_file:
