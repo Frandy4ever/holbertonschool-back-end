@@ -1,26 +1,11 @@
 #!/usr/bin/python3
-"""
-
-"""
 
 import requests
 import sys
-
+import csv
 
 
 def get_employee_todo_progress(employee_id):
-    """
-    Retrieves and displays the TODO list progress of a given employee using the JSONPlaceholder API.
-
-    Parameters:
-        employee_id (int): The ID of the employee for whom the TODO list progress is to be retrieved.
-
-    Raises:
-        ValueError: If the employee ID is not a positive integer.
-
-    Returns:
-        None
-    """
     api_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
 
     response = requests.get(api_url)
@@ -40,8 +25,31 @@ def get_employee_todo_progress(employee_id):
             if todo['completed']:
                 print(f"\t{todo['title']}")
 
+        # Export data to CSV file
+        export_to_csv(employee_id, employee_name, todos)
     else:
         print(f"Error: Unable to fetch TODO list for employee {employee_id}")
+
+
+def export_to_csv(employee_id, employee_name, todos):
+    csv_filename = f"{employee_id}.csv"
+
+    with open(csv_filename, mode='w', newline='') as csv_file:
+        fieldnames = ["USER_ID", "USERNAME",
+                      "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+        writer.writeheader()
+
+        for todo in todos:
+            writer.writerow({
+                "USER_ID": employee_id,
+                "USERNAME": employee_name,
+                "TASK_COMPLETED_STATUS": "Completed" if todo['completed'] else "Incomplete",
+                "TASK_TITLE": todo['title']
+            })
+
+        print(f"Data exported to {csv_filename}")
 
 
 if __name__ == "__main__":
