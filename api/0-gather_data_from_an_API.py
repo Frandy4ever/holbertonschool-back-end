@@ -3,6 +3,7 @@
 import requests
 import sys
 
+"""This module provides a function to retrieve and display the TODO list progress of a given employee using the JSONPlaceholder API."""
 
 def get_employee_todo_progress(employee_id):
     """
