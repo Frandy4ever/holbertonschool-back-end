@@ -1,15 +1,12 @@
 #!/usr/bin/python3
 """
-Script to export user-specific data from the JSONPlaceholder
-API in JSON format.
+Script to export user-specific data from the JSONPlaceholder API in JSON format.
 
 Functions:
     export_data_to_json(user_id):
-        Exports user-related data, including completed
-        tasks, to a JSON file.
+        Exports user-related data, including completed tasks, to a JSON file.
         Args:
-            user_id (int): The ID of the user for whom
-            data is exported.
+            user_id (int): The ID of the user for whom data is exported.
 
 Usage:
     python script_name.py user_id
@@ -29,11 +26,7 @@ def export_data_to_json(user_id):
         user_id (int): The ID of the user for whom data is exported.
 
     Raises:
-        requests.exceptions.RequestException: If there is
-        an issue with API requests.
-
-    Usage:
-        export_data_to_json(1)
+        requests.exceptions.RequestException: If there is an issue with API requests.
     """
     try:
         user_response = requests.get(f"{BASE_API_URL}/users/{user_id}")
@@ -44,7 +37,7 @@ def export_data_to_json(user_id):
         todo_response.raise_for_status()
         todo_data = todo_response.json()
 
-        data = {
+        exported_data = {
             user_id: [
                 {
                     "task": task['title'],
@@ -56,12 +49,12 @@ def export_data_to_json(user_id):
         }
 
         with open(f"{user_id}_exported_data.json", mode='w') as json_file:
-            json.dump(data, json_file)
+            json.dump(exported_data, json_file)
 
         print(f"Data has been exported to {user_id}_exported_data.json")
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error: Unable to fetch data from the API. {e}")
+    except requests.exceptions.RequestException as error:
+        print(f"Error: Unable to fetch data from the API. {error}")
 
 
 if __name__ == '__main__':
