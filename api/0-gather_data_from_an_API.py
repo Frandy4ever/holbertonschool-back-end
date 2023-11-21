@@ -1,28 +1,36 @@
 #!/usr/bin/python3
-"""Use REST API to to return a given employee's todo list."""
+"""Use this REST API, for a given employee ID, returns information about his/her TODO"""
 import requests
-# import sys
+import sys
 
 
-def display_employee_progress(employee_id):
-    """Reveal the employee todo list progress."""
-    url = "https://jsonplaceholder.typicode.com"
-    todo_url = f"{url}/todos"
-    employee_url = f"{url}/users/{employee_id}"
+def get_employee_todo_progress(employee_id):
+    """ script must display to stdout the employee todo list progress """
+    base_url = "https://jsonplaceholder.typicode.com/users"
+    todos_url = f"{base_url}/{employee_id}/todos"
 
     try:
-        employee_data = requests.get(employee_url).json()
-        todo_data = requests.get(
-            todo_url, params={"userId": employee_id}).json()
+        """ Fetching employee data"""
+        employee_response = requests.get(f"{base_url}/{employee_id}")
+        employee_data = employee_response.json()
+        employee_name = employee_data["name"]
 
-        employee_name = employee_data.get("name")
-        completed_tasks = [i["title"] for i in todo_data if i["completed"]]
-        completed = len(completed_tasks)
-        total_complete = len(todo_data)
+        """Fetching TODO list for the employee"""
+        todos_response = requests.get(todos_url)
+        todos = todos_response.json()
 
-        print(f"Employee {employee_name} is done with tasks({completed}/{total_complete})")
-        for task in completed_tasks:
-            print(f"\t {task}")
+        """ Calculating progress"""
+        total_tasks = len(todos)
+        completed_tasks = sum(1 for todo in todos if todo["completed"])
+        percentage_complete = round((completed_tasks / total_tasks) * 100, 2)
+
+        """ Displaying progress in a more user-friendly format"""
+        print(
+            f"Employee {employee_name} is done with tasks ({completed_tasks}/{total_tasks}) ({percentage_complete}%):")
+
+        for todo in todos:
+            if todo["completed"]:
+                print(f"\t{todo['title']}")
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data: {e}")
@@ -30,9 +38,9 @@ def display_employee_progress(employee_id):
 
 
 if __name__ == "__main__":
-    import sys
-    # if len(sys.argv) != 2:
-    #     print("Usage: python script.py <employee_id>")
-    #     sys.exit(1)
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <employee_id>")
+        sys.exit(1)
 
-    display_employee_progress(int(sys.argv[1]))
+    employee_id = int(sys.argv[1])
+    get_employee_todo_progress(employee_id)
