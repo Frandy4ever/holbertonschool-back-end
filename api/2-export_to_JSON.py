@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script to export user-specific data from the 
+Script to export user-specific data from the
 JSONPlaceholder API in JSON format.
 
 Functions:
@@ -27,7 +27,7 @@ def export_data_to_json(user_id):
         user_id (int): The ID of the user for whom data is exported.
 
     Raises:
-        requests.exceptions.RequestException: 
+        requests.exceptions.RequestException:
         If there is an issue with API requests.
     """
     try:
