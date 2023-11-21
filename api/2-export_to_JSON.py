@@ -50,8 +50,8 @@ def export_data_to_json(user_id):
             ]
         }
 
-        with open(f"{user_id}_exported_data.json", mode='w', encoding='UTF-8') \
-            as json_file:
+        with open(f"{user_id}_exported_data.json", mode='w', encoding='UTF-8')\
+                as json_file:
             json.dump(exported_data, json_file)
 
         print(f"Data has been exported to {user_id}_exported_data.json")
