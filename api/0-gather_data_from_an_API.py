@@ -26,7 +26,8 @@ def get_employee_todo_progress(employee_id):
 
         """ Displaying progress in a more user-friendly format"""
         print(
-            f"Employee {employee_name} is done with tasks ({completed_tasks}/{total_tasks}) ({percentage_complete}%):")
+            f"Employee {employee_name} is done with tasks \
+                ({completed_tasks}/{total_tasks}) ({percentage_complete}%):")
 
         for todo in todos:
             if todo["completed"]:
