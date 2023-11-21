@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script to export user-specific data from the JSONPlaceholder 
+Script to export user-specific data from the JSONPlaceholder
 API in JSON format.
 
 Functions:
