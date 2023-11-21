@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Export data in Comma Separated Values format"""
-import requests
 import csv
+import requests
 import sys
 
 
