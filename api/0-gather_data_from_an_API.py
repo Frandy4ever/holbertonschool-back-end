@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-
+"""Use REST API to to return a given employee's todo list."""
 import requests
 import sys
 
 
 def display_employee_progress(employee_id):
-    """ script must display to stdout the employee todo list progress """
+    """Reveal the employee todo list progress."""
     url = "https://jsonplaceholder.typicode.com"
     todo_url = f"{url}/todos"
     employee_url = f"{url}/users/{employee_id}"
