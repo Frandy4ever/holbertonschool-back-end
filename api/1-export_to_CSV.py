@@ -1,51 +1,44 @@
 #!/usr/bin/python3
-"""Export data in Comma Separated Values format"""
+"""Exporting employee todo data in CSV format"""
 import csv
 import requests
-import sys
+from sys import argv
 
 
-def get_employee_todo_progress(employee_id):
-    """Retrieve data via API"""
-    url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
+def fetch_and_export_data():
+    """ Get the data from the API as requested """
+    if len(argv) != 2:
+        print("Usage: python script_name.py user_id")
+        return
 
-    response = requests.get(url)
-    todos = response.json()
-
-    user_id = todos[0]['userId']
-    username = todos[0]['username']
-
-    """Create CSV file with employee data"""
-    csv_filename = f"{user_id}.csv"
-    with open(csv_filename, mode='w', newline='') as csv_file:
-        fieldnames = ["USER_ID", "USERNAME",
-                      "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-
-        writer.writeheader()
-
-        """Write TODO list data to CSV"""
-        for todo in todos:
-            writer.writerow({
-                "USER_ID": user_id,
-                "USERNAME": username,
-                "TASK_COMPLETED_STATUS": str(todo['completed']),
-                "TASK_TITLE": todo['title']
-            })
-
-    print(f"CSV file '{csv_filename}' created successfully.")
-
-
-if __name__ == "__main__":
-    """Check if an employee ID is provided as a command-line argument"""
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <employee_id>")
-        sys.exit(1)
+    base_url = 'https://jsonplaceholder.typicode.com/'
+    user_id = argv[1]
 
     try:
-        """Parse employee ID from command-line argument"""
-        employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
-    except ValueError:
-        print("Employee ID must be an integer.")
-        sys.exit(1)
+        user_response = requests.get(f"{base_url}users/{user_id}")
+        user_response.raise_for_status()
+        user_data = user_response.json()
+
+        todo_response = requests.get(
+            f"{base_url}todos", params={'userId': user_id})
+        todo_response.raise_for_status()
+        todo_data = todo_response.json()
+
+        with open(f'{user_id}.csv', 'w', encoding='UTF-8') as file:
+            csv_writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
+            for task in todo_data:
+                username = user_data.get('username')
+                task_completed = task.get('completed')
+                task_title = task.get('title')
+
+                task_record = [user_id, username, task_completed, task_title]
+                csv_writer.writerow(task_record)
+
+        print("CSV file created successfully.")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error: Unable to fetch data from the API. Reason: {e}")
+
+
+if __name__ == '__main__':
+    fetch_and_export_data()
