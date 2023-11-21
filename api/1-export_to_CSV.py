@@ -15,7 +15,6 @@ def get_employee_todo_progress(employee_id):
     user_id = todos[0]['userId']
     username = todos[0]['username']
 
-    total_tasks = len(todos)
 
     """Create CSV file with employee data"""
     csv_filename = f"{user_id}.csv"
