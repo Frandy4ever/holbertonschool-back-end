@@ -5,10 +5,10 @@ API in JSON format.
 
 Functions:
     export_data_to_json(user_id):
-        Exports user-related data, including completed 
+        Exports user-related data, including completed
         tasks, to a JSON file.
         Args:
-            user_id (int): The ID of the user for whom 
+            user_id (int): The ID of the user for whom
             data is exported.
 
 Usage:
@@ -29,7 +29,7 @@ def export_data_to_json(user_id):
         user_id (int): The ID of the user for whom data is exported.
 
     Raises:
-        requests.exceptions.RequestException: If there is 
+        requests.exceptions.RequestException: If there is
         an issue with API requests.
 
     Usage:
