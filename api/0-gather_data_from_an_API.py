@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Use REST API to to return a given employee's todo list."""
 import requests
-import sys
+# import sys
 
 
 def display_employee_progress(employee_id):
@@ -30,8 +30,9 @@ def display_employee_progress(employee_id):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <employee_id>")
-        sys.exit(1)
+    import sys
+    # if len(sys.argv) != 2:
+    #     print("Usage: python script.py <employee_id>")
+    #     sys.exit(1)
 
     display_employee_progress(int(sys.argv[1]))
