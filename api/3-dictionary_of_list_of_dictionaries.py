@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Export data in JSON format"""
 import json
-import sys
 import requests
+import sys
 
 
 def export_all_to_json():
