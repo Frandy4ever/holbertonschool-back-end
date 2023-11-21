@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Use this REST API, for a given employee ID, returns information about his/her TODO"""
+"""Use this REST API, for a given employee ID, returns 
+information about his/her TODO
+"""
 import requests
 import sys
 
