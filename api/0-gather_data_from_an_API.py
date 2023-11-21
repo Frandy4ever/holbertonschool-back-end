@@ -3,10 +3,7 @@
 import requests
 import sys
 
-<<<<<<< HEAD
 
-=======
->>>>>>> bbe251af9a8d83f349f1b470d7880eebd02ceeef
 def get_employee_todo_progress(employee_id):
     """ script must display to stdout the employee todo list progress """
     base_url = "https://jsonplaceholder.typicode.com/users"
